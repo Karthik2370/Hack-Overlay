@@ -3,8 +3,6 @@
 ## Description
 The **RupeePulse Rewards Hacker Terminal Prank** is a **purely fictional, entertainment-only** web application designed to simulate a fake hacking scenario for fun. It mimics an Indian-themed fintech website ("RupeePulse Rewards") offering a ₹5000 reward in partnership with Paytm and PhonePe. Clicking "Verify Eligibility" triggers a mock "hacking" terminal with commands, error messages, and Windows-style pop-up modals, culminating in a "SYSTEM BREACH COMPLETE" message. Post-hack, users can interact with a fake command prompt, see a ransomware modal, and experience a glitch effect for added realism.
 
-**This is a prank and does not perform any real hacking, data collection, or system harm.** It is intended for lighthearted fun among friends who understand it’s fake. The project uses only two Unsplash-hosted images for testimonial avatars (Priya Sharma, Rohan Patel) to maintain a realistic Indian context.
-
 ## Disclaimer
 **This project is a harmless prank for entertainment purposes only.** It does not access, modify, or harm any system, network, or data. No real hacking, file encryption, or data exfiltration occurs. The website runs entirely in the browser, using HTML, CSS, and JavaScript, with no server-side functionality or data collection. The creator is not responsible for misuse or misinterpretation. **Always inform recipients this is a prank to avoid panic or legal issues.**
 
@@ -15,10 +13,7 @@ The **RupeePulse Rewards Hacker Terminal Prank** is a **purely fictional, entert
   - **Interactive Prompt**: Type commands (e.g., `dir`, `whoami`) for fake responses like "access denied - system compromised".
   - **Ransomware Modal**: A "Ransomware Detected" pop-up with a fake "Contact Support" button.
   - **Glitch Effect**: Subtle terminal text flicker post-hack for realism.
-- **Responsive Layout**: Fits the viewport (100vh) with a sticky header, centered content, and bottom footer.
 - **Controls**: Press F11 for fullscreen (with tooltip), Ctrl+Enter to return to the home screen.
-- **Images**: Only uses two Unsplash images for testimonial avatars (50x50px).
-- **Console Logs**: Debug logs for image loading, user commands, and simulation steps.
 
 
 ## Legal Note
