@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RupeePulse Rewards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+      color: #333;
+    }
+
+    #homeScreen {
+      min-height: 100vh;
+      background: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: clamp(18px, 5vw, 22px);
+      font-weight: 700;
+      color: #FF9933;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav a {
+      color: #000080;
+      text-decoration: none;
+      font-size: clamp(14px, 4vw, 16px);
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #homeTitle {
+      font-size: clamp(24px, 6vw, 32px);
+      font-weight: 700;
+      color: #000080;
+      margin-bottom: 15px;
+    }
+
+    #homeTagline {
+      font-size: clamp(16px, 4vw, 18px);
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    #startButton {
+      background: #FF9933;
+      color: white;
+      padding: 12px 25px;
+      font-size: clamp(16px, 4vw, 18px);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    #startButton:hover {
+      background: #e68a00;
+      transform: translateY(-2px);
+    }
+
+    #startButton:hover::after {
+      content: "Press F11 to enter fullscreen, then click to start";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      white-space: nowrap;
+      z-index: 1000;
+      margin-bottom: 10px;
+    }
+
+    .testimonials {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      background: #ffffff;
+      width: 100%;
+    }
+
+    .testimonial {
+      max-width: 280px;
+      padding: 15px;
+      background: #f5f7fa;
+      border-radius: 5px;
+      text-align: left;
+      flex: 1 1 280px;
+    }
+
+    .testimonial img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      background: #ccc;
+    }
+
+    .testimonial p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .testimonial span {
+      font-weight: 700;
+      color: #333;
+      font-size: 14px;
+    }
+
+    footer {
+      background: #ffffff;
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      width: 100%;
+      border-top: 1px solid #e0e0e0;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: #000080;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      .hero {
+        padding: 15px;
+      }
+      .testimonials {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    #terminalScreen {
+      display: none;
+      background: black;
+      height: 100vh;
+      width: 100%;
+      color: #00FF00;
+      font-family: "Consolas", "Courier New", monospace;
+      flex-direction: column;
+      position: relative;
+    }
+
+    #terminal {
+      flex: 1;
+      overflow-y: hidden;
+      padding: 20px;
+      white-space: pre-wrap;
+      font-size: 16px;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    .glitch {
+      animation: glitch 0.3s infinite alternate;
+      animation-iteration-count: 16; /* Approx 5 seconds */
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); opacity: 1; }
+      50% { transform: translate(2px, -2px); opacity: 0.7; }
+      100% { transform: translate(-2px, 2px); opacity: 0.9; }
+    }
+
+    .red { color: #FF4C4C; }
+    .yellow { color: #FFD700; }
+    .white { color: #FFFFFF; }
+    .bold { font-weight: bold; }
+
+    #cursor {
+      display: inline-block;
+      width: 10px;
+      height: 18px;
+      background: #00FF00;
+      vertical-align: bottom;
+      margin-left: 5px;
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { background: transparent; }
+    }
+
+    #commandInput {
+      background: black;
+      border: none;
+      color: #00FF00;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 16px;
+      width: 100%;
+      padding: 5px 20px;
+      outline: none;
+      display: none;
+    }
+
+    .modal {
+      position: absolute;
+      background: #C0C0C0;
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0 #000, -3px -3px 0 #FFF;
+      font-family: "Tahoma", "MS Sans Serif", sans-serif;
+      max-width: 350px;
+      z-index: 1000;
+      display: none;
+    }
+
+    .modal-titlebar {
+      background: linear-gradient(to right, #000080, #1084D0);
+      color: white;
+      padding: 3px 5px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-weight: bold;
+    }
+
+    .modal-close {
+      background: #C0C0C0;
+      border: 1px solid #000;
+      width: 20px;
+      height: 20px;
+      line-height: 18px;
+      text-align: center;
+      cursor: default;
+      font-size: 12px;
+      box-shadow: inset -1px -1px #000, inset 1px 1px #FFF;
+    }
+
+    .modal-content {
+      padding: 15px;
+      font-size: 12px;
+      color: #333;
+      background: #C0C0C0;
+    }
+
+    .modal-button {
+      background: #C0C0C0;
+      border: 1px solid #000;
+      padding: 3px 10px;
+      margin-left: 5px;
+      font-size: 12px;
+      box-shadow: inset -1px -1px #000, inset 1px 1px #FFF;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div id="homeScreen">
+  <header>
+    <div class="logo">RupeePulse Rewards</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <div class="hero">
+    <div id="homeTitle">You’re Eligible for a ₹5000 Reward!</div>
+    <div id="homeTagline">RupeePulse Rewards, in partnership with Paytm and PhonePe, is offering exclusive cash rewards to select users across India. Verify your eligibility to claim your reward via UPI today.</div>
+    <button id="startButton" onclick="startPrank()">Verify Eligibility</button>
+  </div>
+  <div class="testimonials">
+    <div class="testimonial">
+      <img src="https://images.unsplash.com/photo-1607349913338-fca6f7fc42d0?fit=crop&w=50&h=50" alt="Priya" onload="console.log('Image loaded: avatar1')" onerror="console.error('Image failed to load: avatar1')">
+      <p>"I received ₹5000 in my UPI account within minutes! RupeePulse is amazing!"</p>
+      <span>Priya Sharma, Mumbai</span>
+    </div>
+    <div class="testimonial">
+      <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?fit=crop&w=50&h=50" alt="Rohan" onload="console.log('Image loaded: avatar2')" onerror="console.error('Image failed to load: avatar2')">
+      <p>"Super easy process and instant payout to my PhonePe. Highly recommended!"</p>
+      <span>Rohan Patel, Bengaluru</span>
+    </div>
+  </div>
+  <footer>
+    <p>© 2025 RupeePulse Rewards. All rights reserved.</p>
+    <p>
+      <a href="#">Terms of Service</a> |
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Contact Us</a>
+    </p>
+  </footer>
+</div>
+
+<div id="terminalScreen">
+  <div id="terminal"></div>
+  <input id="commandInput" type="text" placeholder="root@target:~#">
+  <div id="modal1" class="modal">
+    <div class="modal-titlebar">
+      <span class="modal-title">Security Breach Detected</span>
+      <span class="modal-close">X</span>
+    </div>
+    <div class="modal-content">
+      <p><b>CRITICAL ALERT:</b> Unauthorized access attempt detected on system.</p>
+      <p>Details:<br>
+      - Source: 192.168.1.100<br>
+      - Port: 445 (SMB)<br>
+      - Status: Exploit in progress</p>
+      <div class="modal-buttons">
+        <span class="modal-button">OK</span>
+        <span class="modal-button">Cancel</span>
+      </div>
+    </div>
+  </div>
+  <div id="modal2" class="modal">
+    <div class="modal-titlebar">
+      <span class="modal-title">System Compromise Warning</span>
+      <span class="modal-close">X</span>
+    </div>
+    <div class="modal-content">
+      <p><b>WARNING:</b> Malicious payload detected in memory.</p>
+      <p>Details:<br>
+      - Process: svchost.exe<br>
+      - Memory: 0x7FFF4A2B<br>
+      - Action: Quarantine failed</p>
+      <div class="modal-buttons">
+        <span class="modal-button">Retry</span>
+        <span class="modal-button">Ignore</span>
+      </div>
+    </div>
+  </div>
+  <div id="modal3" class="modal">
+    <div class="modal-titlebar">
+      <span class="modal-title">Ransomware Detected</span>
+      <span class="modal-close">X</span>
+    </div>
+    <div class="modal-content">
+      <p><b>ALERT:</b> System files encrypted with 256-bit AES.</p>
+      <p>Details:<br>
+      - Data exfiltrated to 45.77.123.45<br>
+      - Recovery key: Contact admin@darknet.ru<br>
+      - Deadline: 60 seconds</p>
+      <div class="modal-buttons">
+        <span class="modal-button" onclick="console.log('Contact Support clicked')">Contact Support</span>
+        <span class="modal-button">Ignore</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  console.log("Page loaded: RupeePulse Rewards");
+
+  const terminal = document.getElementById("terminal");
+  const modal1 = document.getElementById("modal1");
+  const modal2 = document.getElementById("modal2");
+  const modal3 = document.getElementById("modal3");
+  const commandInput = document.getElementById("commandInput");
+
+  if (!terminal || !modal1 || !modal2 || !modal3 || !commandInput) {
+    console.error("DOM elements missing:", { terminal, modal1, modal2, modal3, commandInput });
+  } else {
+    console.log("DOM elements found successfully");
+  }
+
+  const commands = [
+    "Initializing remote exploit...",
+    "Establishing encrypted connection...",
+    "Handshaking with target (192.168.56.12)...",
+    "Connection established.",
+    "Bypassing firewall rules...",
+    "Injecting remote shell payload...",
+    "Privilege escalation attempt...",
+    "Admin privileges granted.",
+    "Dumping credentials from memory...",
+    "Extracting password hashes...",
+    "Decrypting hashes...",
+    "Brute-forcing remaining hashes...",
+    "Compromising secondary nodes...",
+    "Uploading malicious package...",
+    "Deleting system event logs...",
+    "Launching ransomware payload...",
+    "Disabling antivirus daemon...",
+    "Opening reverse SSH tunnel...",
+    "Patching kernel vulnerability (CVE-2023-XXXXX)...",
+    "Root access acquired.",
+    "Exfiltrating data to remote server...",
+    "Removing forensic traces...",
+    "Operation successful. Target fully compromised."
+  ];
+
+  const randomErrors = [
+    '<span class="red bold">ERROR:</span> Invalid packet header received.',
+    '<span class="yellow">WARNING:</span> Checksum mismatch on payload block.',
+    '<span class="red bold">CRITICAL:</span> Memory access violation at 0x003FA2C1',
+    '<span class="yellow">ALERT:</span> IDS bypass confirmed.',
+    '<span class="red bold">FATAL:</span> Stack buffer overflow detected.',
+  ];
+
+  const commandResponses = {
+    "dir": "dir: access denied - system compromised",
+    "whoami": "root (compromised session)",
+    "help": "No help available. System locked.",
+    "ls": "ls: access denied - system compromised",
+    "pwd": "pwd: permission denied",
+    "exit": "exit: session terminated by remote host"
+  };
+
+  const asciiArt = `
+<span class="red bold">██████╗ ██╗   ██╗███████╗██████╗ ██╗ ██████╗ ████████╗</span>
+<span class="red bold">██╔══██╗██║   ██║██╔════╝██╔══██╗██║██╔═══██╗╚══██╔══╝</span>
+<span class="red bold">██████╔╝██║   ██║█████╗  ██████╔╝██║██║   ██║   ██║   </span>
+<span class="red bold">██╔═══╝ ██║   ██║██╔══╝  ██╔═══╝ ██║██║   ██║   ██║   </span>
+<span class="red bold">██║     ╚██████╔╝███████╗██║     ██║╚██████╔╝   ██║   </span>
+<span class="red bold">╚═╝      ╚═════╝ ╚══════╝╚═╝     ╚═╝ ╚═════╝    ╚═╝   </span>`;
+
+  let index = 0;
+  let hackComplete = false;
+
+  function startPrank() {
+    console.log("startPrank called");
+    try {
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("terminalScreen").style.display = "flex";
+      commandInput.style.display = "none";
+      console.log("Switched to terminal screen");
+      startSimulation();
+    } catch (err) {
+      console.error("Error in startPrank:", err);
+    }
+  }
+
+  function showRandomModal() {
+    console.log("Showing random modal");
+    try {
+      const modals = [modal1, modal2];
+      const randomModal = modals[Math.floor(Math.random() * modals.length)];
+      randomModal.style.top = `${Math.random() * 60 + 10}%`;
+      randomModal.style.left = `${Math.random() * 60 + 10}%`;
+      randomModal.style.display = 'block';
+      console.log("Modal displayed:", randomModal.id, "at", randomModal.style.top, randomModal.style.left);
+      setTimeout(() => {
+        randomModal.style.display = 'none';
+        console.log("Modal hidden:", randomModal.id);
+      }, Math.random() * 2000 + 1000);
+    } catch (err) {
+      console.error("Error in showRandomModal:", err);
+    }
+  }
+
+  function showRansomwareModal() {
+    console.log("Showing ransomware modal");
+    try {
+      modal3.style.top = `${Math.random() * 60 + 10}%`;
+      modal3.style.left = `${Math.random() * 60 + 10}%`;
+      modal3.style.display = 'block';
+      console.log("Ransomware modal displayed at", modal3.style.top, modal3.style.left);
+      setTimeout(() => {
+        modal3.style.display = 'none';
+        console.log("Ransomware modal hidden");
+      }, 5000);
+    } catch (err) {
+      console.error("Error in showRansomwareModal:", err);
+    }
+  }
+
+  function startSimulation() {
+    console.log("Starting simulation");
+    try {
+      document.addEventListener('keydown', handleKeydown);
+      console.log("Keydown event listener added");
+      setTimeout(typeCommand, 800);
+    } catch (err) {
+      console.error("Error in startSimulation:", err);
+    }
+  }
+
+  function handleKeydown(event) {
+    console.log("Keydown event:", event.key, event.ctrlKey);
+    try {
+      if (event.key === 'F11') {
+        console.log("F11 pressed, browser handles fullscreen toggle");
+      } else if (event.ctrlKey && event.key === 'Enter') {
+        console.log("Ctrl+Enter pressed, returning to home screen");
+        document.getElementById("terminalScreen").style.display = "none";
+        document.getElementById("homeScreen").style.display = "flex";
+        document.removeEventListener('keydown', handleKeydown);
+        commandInput.removeEventListener('keydown', handleCommandInput);
+        console.log("Keydown event listener removed");
+      }
+    } catch (err) {
+      console.error("Error in handleKeydown:", err);
+    }
+  }
+
+  function handleCommandInput(event) {
+    if (event.key === 'Enter') {
+      const command = commandInput.value.trim().toLowerCase();
+      console.log("User typed command:", command);
+      terminal.innerHTML += `root@target:~# ${command}\n`;
+      const response = commandResponses[command] || `command not found: system restricted`;
+      terminal.innerHTML += `${response}\n`;
+      commandInput.value = '';
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  }
+
+  function typeCommand() {
+    console.log("Typing command, index:", index);
+    try {
+      let delay = Math.random() * 200 + 50;
+
+      if (index < commands.length) {
+        terminal.innerHTML += "> " + commands[index] + "\n";
+        console.log("Command typed:", commands[index]);
+        index++;
+
+        if (Math.random() < 0.25) {
+          const error = randomErrors[Math.floor(Math.random() * randomErrors.length)];
+          terminal.innerHTML += error + "\n";
+          console.log("Error displayed:", error);
+        }
+
+        if (Math.random() < 0.3 && index > 5 && index < commands.length - 5) {
+          showRandomModal();
+        }
+
+        terminal.scrollTop = terminal.scrollHeight;
+        setTimeout(typeCommand, delay);
+      } else {
+        setTimeout(() => {
+          terminal.innerHTML += "\n" + asciiArt + "\n\n";
+          terminal.innerHTML += "<span class='white bold'>>>> SYSTEM BREACH COMPLETE. <<<</span>\n";
+          terminal.innerHTML += "<span class='red bold'>CRITICAL: Files encrypted. Contacts, Photos sent to 45.77.123.45. Pay 0.5 BTC to admin@darknet.ru to recover. System lock in 60 seconds.</span>\n";
+          terminal.classList.add('glitch');
+          console.log("Glitch effect applied");
+          terminal.appendChild(createCursor());
+          terminal.scrollTop = terminal.scrollHeight;
+          hackComplete = true;
+          commandInput.style.display = 'block';
+          commandInput.focus();
+          commandInput.addEventListener('keydown', handleCommandInput);
+          setTimeout(showRansomwareModal, Math.random() * 2000 + 1000);
+          console.log("Simulation completed, interactive prompt enabled");
+        }, 800);
+      }
+    } catch (err) {
+      console.error("Error in typeCommand:", err);
+    }
+  }
+
+  function createCursor() {
+    console.log("Creating cursor");
+    try {
+      const cursor = document.createElement('div');
+      cursor.id = "cursor";
+      return cursor;
+    } catch (err) {
+      console.error("Error in createCursor:", err);
+      return document.createElement('div');
+    }
+  }
+</script>
+</body>
+</html>
