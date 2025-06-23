@@ -307,6 +307,47 @@
       box-shadow: inset -1px -1px #000, inset 1px 1px #FFF;
       cursor: pointer;
     }
+    #disclaimerInfo {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 2000;
+  background: #000080;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  line-height: 30px;
+  cursor: default;
+  transition: transform 0.2s ease;
+}
+
+#disclaimerInfo:hover {
+  transform: scale(1.1);
+}
+
+#disclaimerTooltip {
+  visibility: hidden;
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  text-align: left;
+  padding: 10px;
+  border-radius: 6px;
+  position: absolute;
+  bottom: 45px;
+  right: 0;
+  z-index: 2001;
+  font-size: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#disclaimerInfo:hover #disclaimerTooltip {
+  visibility: visible;
+}
   </style>
 </head>
 <body>
@@ -345,6 +386,14 @@
       <a href="#">Contact Us</a>
     </p>
   </footer>
+  <div id="disclaimerInfo">
+  i
+  <div id="disclaimerTooltip">
+    This is a prank simulation for entertainment purposes only.<br>
+    No actual hacking is being performed.<br>
+    RupeePulse Rewards is a fictional concept.
+  </div>
+</div>
 </div>
 
 <div id="terminalScreen">
